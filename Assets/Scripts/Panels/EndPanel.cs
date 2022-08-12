@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndPanel : MonoBehaviour
+public class EndPanel : Panel
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject winScreen;
+    public GameObject loseScreen;
+
+    public void Success()
     {
-        
+        winScreen.SetActive(true);
+        loseScreen.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Fail()
     {
-        
+        winScreen.SetActive(false);
+        loseScreen.SetActive(true);
     }
 }
