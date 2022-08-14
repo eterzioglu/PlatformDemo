@@ -11,8 +11,7 @@ public class UIManager : MonoBehaviour
     public GamePanel gamePanel;
     public EndPanel endPanel;
 
-    [HideInInspector] public int scoreCount = 0;
-    [HideInInspector] public int gridCount = 0;
+    [HideInInspector] public bool gameStart = false;
     #endregion
 
     #region Singleton
@@ -34,5 +33,30 @@ public class UIManager : MonoBehaviour
     {
         gamePanel.ActiveSmooth(true);
         startPanel.ActiveSmooth(false);
+
+        CameraManager.instance.SetFollowOffset(new Vector3(3, 7, -5));
+        CameraManager.instance.SetCinemachineRotation(new Vector3(35, -20, 0));
+
+        PlayerController.instance.TriggerAnimation("run");
+        gameStart = true;
+    }
+
+    public void EndGame(bool win)
+    {
+        gamePanel.ActiveSmooth(false);
+        endPanel.ActiveSmooth(true);
+
+        gameStart = false;
+
+        if (win)
+        {
+            PlayerController.instance.TriggerAnimation("dance");
+            endPanel.Success();
+        }
+        else
+        {
+            PlayerController.instance.TriggerAnimation("fall");
+            endPanel.Fail();
+        }
     }
 }
