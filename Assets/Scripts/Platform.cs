@@ -9,6 +9,7 @@ public class Platform : MonoBehaviour
     public GameObject refBlock;
     private GameObject block;
     public int blockCount;
+    public bool fail = false;
 
     float pitch = 0.5f;
     int i = 0;
@@ -29,12 +30,18 @@ public class Platform : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && UIManager.instance.gameStart)
+        if(Input.GetMouseButtonDown(0) && UIManager.instance.gameStart && !fail)
         {
             block.GetComponent<Block>().move = false;
-
             
             float distance = block.transform.position.x - refBlock.transform.position.x;
+
+            if (Mathf.Abs(distance) > refBlock.transform.localScale.x / 2)
+            {
+                fail = true;
+                block.AddComponent<Rigidbody>().mass = 100f;
+                return;
+            }
 
             if(distance >= 0.1)
             {

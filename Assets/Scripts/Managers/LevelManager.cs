@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public GameObject platformParent;
+    public int level = 0;
 
     #region Singleton
     public static LevelManager instance = null;
@@ -14,8 +15,15 @@ public class LevelManager : MonoBehaviour
     }
     #endregion
 
+    private void Start()
+    {
+        level = PlayerPrefs.GetInt("Level");
+    }
+
     public void SetupNewLevel()
     {
+        SetLevelData();
+
         CameraManager.instance.SetupCameraSettings();
         UIManager.instance.SetupGame();
         PlayerController.instance.TriggerAnimation("idle"); 
@@ -29,5 +37,12 @@ public class LevelManager : MonoBehaviour
         GameObject platform = Instantiate(Resources.Load<GameObject>("Platform"), pos, Quaternion.identity, platformParent.transform);
 
         refObject.GetComponent<Platform>().enabled = false;
+    }
+
+    private void SetLevelData()
+    {
+        PlayerPrefs.SetInt("Level", level + 1);
+        level = PlayerPrefs.GetInt("Level");
+        PlayerPrefs.Save();
     }
 }

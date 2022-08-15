@@ -33,14 +33,6 @@ public class Block : MonoBehaviour
 		Vector3 victimScale = victim.localScale;
 		float distance = victim.transform.position.x - _pos.x;
 
-		if (Mathf.Abs(distance) >= victim.localScale.x / 2)
-		{
-			returnBlock = victim.gameObject;
-			returnBlock.AddComponent<Rigidbody>().mass = 100f;
-			return returnBlock;
-		}
-
-
 		Vector3 leftPoint = victim.position - Vector3.right * victimScale.x / 2;
 		Vector3 rightPoint = victim.position + Vector3.right * victimScale.x / 2;
 		Material mat = victim.GetComponent<MeshRenderer>().material;

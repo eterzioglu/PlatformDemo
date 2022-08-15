@@ -51,6 +51,8 @@ public class UIManager : MonoBehaviour
         endPanel.Active(false);
 
         gameStart = false;
+
+        UIManager.instance.gamePanel.levelText.text = "Level : " + LevelManager.instance.level;
     }
 
     public void EndGame(bool win)
