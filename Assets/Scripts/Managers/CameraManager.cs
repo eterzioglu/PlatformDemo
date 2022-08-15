@@ -57,4 +57,9 @@ public class CameraManager : MonoBehaviour
         vCam.gameObject.SetActive(false);
         orbitalCam.gameObject.SetActive(true);
     }
+
+    public void FailLevel()
+    {
+        vCam.gameObject.SetActive(false);
+    }
 }

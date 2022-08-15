@@ -48,5 +48,10 @@ public class PlayerController : MonoBehaviour
             CameraManager.instance.FinishLevel();
             UIManager.instance.EndGame(true);
         }
+        else if(other.tag == "fall")
+        {
+            UIManager.instance.EndGame(false);
+            CameraManager.instance.FailLevel();
+        }
     }
 }
