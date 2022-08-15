@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    #region Variables
     public List<Material> colors = new List<Material>();
     public GameObject refBlock;
-    GameObject block;
-    Vector3 cutPos;
+    private GameObject block;
+    public int blockCount;
+
     float pitch = 0.5f;
     int i = 0;
+    #endregion
 
     private void Start()
     {
+        SetupPlatform();
+    }
+
+    private void SetupPlatform()
+    {
+        i = 0;
         refBlock = transform.GetChild(0).gameObject;
         SpawnBlock();
+        pitch = 0.5f;
     }
 
     private void Update()
@@ -39,6 +49,8 @@ public class Platform : MonoBehaviour
                 PerfectTiming();
             }
 
+            PlayerController.instance.ChangeXPos(refBlock.transform.position.x);
+
             SpawnBlock();
         }
     }
@@ -58,6 +70,7 @@ public class Platform : MonoBehaviour
             block.gameObject.name = "Block";
             block.GetComponent<Renderer>().material = colors[i];
             block.AddComponent<Block>();
+            block.GetComponent<Block>().move = true;
 
             i++;
         }
@@ -65,7 +78,7 @@ public class Platform : MonoBehaviour
 
     private void CutCube(int factor)
     {
-        cutPos = new Vector3(refBlock.transform.position.x + refBlock.transform.localScale.x / 2 * factor, refBlock.transform.position.y, refBlock.transform.position.z);
+        Vector3 cutPos = new Vector3(refBlock.transform.position.x + refBlock.transform.localScale.x / 2 * factor, refBlock.transform.position.y, refBlock.transform.position.z);
         refBlock = block.GetComponent<Block>().BlockCut(block.transform, cutPos, transform);
         pitch = 0.5f;
     }
@@ -76,5 +89,12 @@ public class Platform : MonoBehaviour
         refBlock = block;
         AudioManager.instance.Success(pitch);
         pitch += 0.5f;
+    }
+
+    public float CalculatePlatformSize()
+    {
+        float size = transform.GetChild(0).gameObject.transform.localScale.z * blockCount + transform.GetChild(1).gameObject.transform.localScale.z;
+
+        return size;
     }
 }

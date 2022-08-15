@@ -7,13 +7,14 @@ public class Block : MonoBehaviour
     private Vector3 pos1;
     private Vector3 pos2;
     public float speed = 1.0f;
-    public bool move = true;
+    public bool move = false;
 
     private void Start()
     {
         pos1 = new Vector3(-5, transform.position.y, transform.position.z);
         pos2 = new Vector3(5, transform.position.y, transform.position.z);
-    }
+
+	}
 
     void Update()
     {
@@ -50,14 +51,16 @@ public class Block : MonoBehaviour
 		float rightWidth = Vector3.Distance(pos, rightPoint);
 		rightSideObj.transform.localScale = new Vector3(rightWidth, victimScale.y, victimScale.z);
 		rightSideObj.GetComponent<MeshRenderer>().material = mat;
+		rightSideObj.AddComponent<Block>();
 
 		GameObject leftSideObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
 		leftSideObj.transform.position = (leftPoint + pos) / 2;
 		float leftWidth = Vector3.Distance(pos, leftPoint);
 		leftSideObj.transform.localScale = new Vector3(leftWidth, victimScale.y, victimScale.z);
 		leftSideObj.GetComponent<MeshRenderer>().material = mat;
-		
-		if(distance >= 0)
+		leftSideObj.AddComponent<Block>();
+
+		if (distance >= 0)
         {
 			returnBlock = rightSideObj;
 			fallingBlock = leftSideObj;
@@ -74,4 +77,12 @@ public class Block : MonoBehaviour
 
 		return returnBlock;
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "destroyer")
+        {
+			Destroy(gameObject);
+        }
+    }
 }

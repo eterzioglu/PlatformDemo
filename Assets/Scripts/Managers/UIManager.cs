@@ -24,9 +24,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        startPanel.Active(true);
-        gamePanel.Active(false);
-        endPanel.Active(false);
+        SetupGame();
     }
 
     public void PlayGame()
@@ -39,6 +37,20 @@ public class UIManager : MonoBehaviour
 
         PlayerController.instance.TriggerAnimation("run");
         gameStart = true;
+
+        if(LevelManager.instance.platformParent.transform.childCount > 1)
+        {
+            DOVirtual.DelayedCall(10.0f, () => Destroy(LevelManager.instance.platformParent.transform.GetChild(0).gameObject));
+        }
+    }
+
+    public void SetupGame()
+    {
+        startPanel.Active(true);
+        gamePanel.Active(false);
+        endPanel.Active(false);
+
+        gameStart = false;
     }
 
     public void EndGame(bool win)

@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
 
     public void Success(float pitch)
     {
-        pitch = Mathf.Clamp(pitch, 0, 3);
+        pitch = Mathf.Clamp(pitch, 0.5f, 3);
         audioSource.pitch = pitch;
         audioSource.Pause();
         audioSource.PlayOneShot(perfectTiming);

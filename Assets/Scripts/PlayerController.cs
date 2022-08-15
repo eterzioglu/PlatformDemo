@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,11 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
     }
 
+    public void ChangeXPos(float targetX)
+    {
+        gameObject.transform.DOMoveX(targetX, 0.25f);
+    }
+
     public void TriggerAnimation(string triggerName)
     {
         anim.SetTrigger(triggerName);
@@ -47,6 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             CameraManager.instance.FinishLevel();
             UIManager.instance.EndGame(true);
+            other.gameObject.SetActive(false);
         }
         else if(other.tag == "fall")
         {

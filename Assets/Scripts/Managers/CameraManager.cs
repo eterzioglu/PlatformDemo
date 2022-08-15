@@ -10,7 +10,6 @@ public class CameraManager : MonoBehaviour
     public CinemachineVirtualCamera vCam;
     public CinemachineVirtualCamera orbitalCam;
     CinemachineTransposer transposer;
-    PlayerController player;
     #endregion
 
     #region Singleton
@@ -23,10 +22,7 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<PlayerController>();
-        transposer = vCam.GetCinemachineComponent<CinemachineTransposer>();
-
-        SetFollowOffset(new Vector3(0, 5, -5));
+        SetupCameraSettings();
     }
 
     private void Update()
@@ -61,5 +57,16 @@ public class CameraManager : MonoBehaviour
     public void FailLevel()
     {
         vCam.gameObject.SetActive(false);
+    }
+
+    public void SetupCameraSettings()
+    {
+        orbitalCam.gameObject.SetActive(false);
+        vCam.gameObject.SetActive(true);
+
+        transposer = vCam.GetCinemachineComponent<CinemachineTransposer>();
+
+        SetCinemachineRotation(new Vector3(27.5f, 0, 0));
+        SetFollowOffset(new Vector3(0, 5, -5));
     }
 }
