@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    #region Variables
     public GameObject platformParent;
     public int level = 0;
+    #endregion
 
     #region Singleton
     public static LevelManager instance = null;

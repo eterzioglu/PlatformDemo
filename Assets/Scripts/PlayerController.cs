@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 0;
     #endregion
 
-
     #region Singleton
     public static PlayerController instance = null;
     private void Awake()

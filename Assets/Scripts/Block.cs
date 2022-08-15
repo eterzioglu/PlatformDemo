@@ -4,25 +4,36 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+    #region Variables
     private Vector3 pos1;
     private Vector3 pos2;
     public float speed = 1.0f;
     public bool move = false;
+    #endregion
 
     private void Start()
     {
-        pos1 = new Vector3(-5, transform.position.y, transform.position.z);
-        pos2 = new Vector3(5, transform.position.y, transform.position.z);
-
+		SetMovementPositions();
 	}
 
     void Update()
     {
-        if(move)
-        {
-            transform.position = Vector3.Lerp(pos1, pos2, (Mathf.Sin(speed * Time.time) + 1.0f) / 2.0f);
-        }
+		MoveBlock();
     }
+
+	private void SetMovementPositions()
+    {
+		pos1 = new Vector3(-5, transform.position.y, transform.position.z);
+		pos2 = new Vector3(5, transform.position.y, transform.position.z);
+	}
+
+	private void MoveBlock()
+    {
+		if (move)
+		{
+			transform.position = Vector3.Lerp(pos1, pos2, (Mathf.Sin(speed * Time.time) + 1.0f) / 2.0f);
+		}
+	}
 
 	public GameObject BlockCut(Transform victim, Vector3 _pos, Transform parent)
 	{
